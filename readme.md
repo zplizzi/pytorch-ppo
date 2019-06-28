@@ -44,11 +44,12 @@ The charts are histograms of complete episode returns per step of the algorithm 
 #### OpenAI Baselines
 Baselines: [all logging data](https://app.wandb.ai/zplizzi/test/runs/11hm85w6?workspace=user-zplizzi)
 `python -m baselines.run --alg=ppo2 --network=mlp --num_timesteps=2e8 --ent_coef=0.01 --num_hidden=64 --num_layers=3 --value_network=copy --num_env=12 --lr=2.5e-4 --vf_coef=.5 --max_grad_norm=.5 --gamma=.99 --lam=.95 --nminibatches=4 --noptepochs=4 --cliprange=.1 --nsteps=128 --env="LunarLander-v2"`
-![baselines](https://github.com/adam-p/markdown-here/raw/master/src/common/images/baselines_lunar.svg "Baselines: Lunar Lander")
+
+![baselines]( https://github.com/zplizzi/pytorch-ppo/raw/master/images/baselines_lunar.svg "Baselines: Lunar Lander")
 
 #### This code
 `python main.py --env="LunarLander-v2" --model="mlp"`
-![this code](https://github.com/adam-p/markdown-here/raw/master/src/common/images/my_lunar.svg "This code: Lunar Lander")
+![this code]( https://github.com/zplizzi/pytorch-ppo/raw/master/images/my_lunar.svg "This code: Lunar Lander")
 
 [all logging data](https://app.wandb.ai/zplizzi/test/runs/ne3xw444?workspace=user-zplizzi)
 
@@ -59,10 +60,11 @@ I didn't spend as much effort making sure my CNN model and hyperparameters are e
 #### OpenAI Baselines
 [all logging data](https://app.wandb.ai/zplizzi/test/runs/11hm85w6?workspace=user-zplizzi)
 `export CUDA_VISIBLE_DEVICES=1 && python -m baselines.run --alg=ppo2 --network=cnn --num_timesteps=2e8 --ent_coef=0.01 --num_env=12 --lr=2.5e-4 --vf_coef=.5 --max_grad_norm=.5 --gamma=.99 --lam=.95 --nminibatches=4 --noptepochs=4 --cliprange=.1 --nsteps=128 --env="PongNoFrameskip-v4"`
-![baselines](https://github.com/adam-p/markdown-here/raw/master/src/common/images/baselines_lunar.svg "Baselines: Lunar Lander")
+
+![baselines]( https://github.com/zplizzi/pytorch-ppo/raw/master/images/baselines_pong.svg "Baselines: Lunar Lander")
 
 #### This code
-![this code](https://github.com/adam-p/markdown-here/raw/master/src/common/images/my_lunar.svg "This code: Lunar Lander")
+![this code]( https://github.com/zplizzi/pytorch-ppo/raw/master/images/my_pong.svg "This code: Lunar Lander")
 `python main.py --env="PongNoFrameskip-v4" --model="cnn" --end_on_life_loss=True --clip_rewards=True`
 
 [all logging data](https://app.wandb.ai/zplizzi/test/runs/ne3xw444?workspace=user-zplizzi)
