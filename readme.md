@@ -5,7 +5,7 @@ Simple, readable, yet full-featured implementation of PPO in Pytorch
 
 The aim of this repository is to provide a minimal yet performant implementation of PPO in Pytorch. Mostly I wrote it just for practice, but also because all the major implementations of PPO are buried in large, complex, and minimally-commented repositories.
 
-This implementation is only ~450 lines, yet includes all the various implementation tricks and details to get comparable performance (accuracy and speed) to the major implementations (eg OpenAI's baselines repo). All the key algorithmic code is in this repo - there aren't dependencies to other repos for normalization, advantage estimation, etc.
+This implementation is only ~500 lines, yet includes all the various implementation tricks and details to get comparable performance (accuracy and speed) to the major implementations (eg OpenAI's baselines repo). All the key algorithmic code is in this repo - there aren't dependencies to other repos for normalization, advantage estimation, etc.
 
 It supports:
 - Continuous and discrete action spaces
@@ -19,7 +19,6 @@ It is a parallel implementation, capable of spawning multiple processes to run t
 
 The key dependences are the OpenAI Gym and Pytorch. It runs on CPU or CPU+GPU. For MuJoCo environments, you'll need that (proprietary) dependency also.
 
-I'd also recommend Weights and Biases for high-quality logging.
 
 You can run the code with by running `main.py` with any desired arguments, eg
 `main.py --env_name="LunarLander-v2" --model="mlp"`.
@@ -27,6 +26,8 @@ You can run the code with by running `main.py` with any desired arguments, eg
 You must make sure that the model type (`mlp` or `cnn`) matches the environment you're training on.
 
 It will default to running on CPU. To use GPU, use the flag `--device="cuda"`.
+
+I'd highly recommend using Weights and Biases for detailed logging. `pip install wandb`, and then use the flag `logger="wandb"`.
 
 All available arguments can be viewed by running `main.py --help`.
 
