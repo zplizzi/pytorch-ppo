@@ -39,18 +39,18 @@ To be sure that the performance is comparable to existing implementations, I ins
 
 The charts are histograms of complete episode returns per step of the algorithm (one step is a batch of 8 partial episodes, each partial episode with 128 timesteps).
 
+Check out the full, detailed metrics at the "all logging data" links below the charts.
+
 ### `LunarLander-v2`
 
 #### OpenAI Baselines
-Baselines: [all logging data](https://app.wandb.ai/zplizzi/test/runs/11hm85w6?workspace=user-zplizzi)
 `python -m baselines.run --alg=ppo2 --network=mlp --num_timesteps=2e8 --ent_coef=0.01 --num_hidden=64 --num_layers=3 --value_network=copy --num_env=12 --lr=2.5e-4 --vf_coef=.5 --max_grad_norm=.5 --gamma=.99 --lam=.95 --nminibatches=4 --noptepochs=4 --cliprange=.1 --nsteps=128 --env="LunarLander-v2"`
-
-![baselines]( https://github.com/zplizzi/pytorch-ppo/raw/master/images/baselines_lunar.svg "Baselines: Lunar Lander")
+![](images/baselines_lunar.png)
+[all logging data](https://app.wandb.ai/zplizzi/test/runs/11hm85w6?workspace=user-zplizzi)
 
 #### This code
 `python main.py --env="LunarLander-v2" --model="mlp"`
-![this code]( https://github.com/zplizzi/pytorch-ppo/raw/master/images/my_lunar.svg "This code: Lunar Lander")
-
+![](images/my_lunar.png)
 [all logging data](https://app.wandb.ai/zplizzi/test/runs/ne3xw444?workspace=user-zplizzi)
 
 ### `PongNoFrameskip-v4`
@@ -58,16 +58,14 @@ Baselines: [all logging data](https://app.wandb.ai/zplizzi/test/runs/11hm85w6?wo
 I didn't spend as much effort making sure my CNN model and hyperparameters are exactly the same as Baselines, so these charts don't match as well as the with LunarLander. However, the overall final performance and time to convergence are similar.
 
 #### OpenAI Baselines
-[all logging data](https://app.wandb.ai/zplizzi/test/runs/11hm85w6?workspace=user-zplizzi)
 `export CUDA_VISIBLE_DEVICES=1 && python -m baselines.run --alg=ppo2 --network=cnn --num_timesteps=2e8 --ent_coef=0.01 --num_env=12 --lr=2.5e-4 --vf_coef=.5 --max_grad_norm=.5 --gamma=.99 --lam=.95 --nminibatches=4 --noptepochs=4 --cliprange=.1 --nsteps=128 --env="PongNoFrameskip-v4"`
-
-![baselines]( https://github.com/zplizzi/pytorch-ppo/raw/master/images/baselines_pong.svg "Baselines: Lunar Lander")
+![](images/baselines_pong.png)
+[all logging data](https://app.wandb.ai/zplizzi/test/runs/6f9f2llh?workspace=user-zplizzi)
 
 #### This code
-![this code]( https://github.com/zplizzi/pytorch-ppo/raw/master/images/my_pong.svg "This code: Lunar Lander")
 `python main.py --env="PongNoFrameskip-v4" --model="cnn" --end_on_life_loss=True --clip_rewards=True`
-
-[all logging data](https://app.wandb.ai/zplizzi/test/runs/ne3xw444?workspace=user-zplizzi)
+![](images/my_pong.png)
+[all logging data](https://app.wandb.ai/zplizzi/test/runs/trr799x9?workspace=user-zplizzi)
 
 
 ### Speed comparison
@@ -76,7 +74,7 @@ When training on `PongNoFrameskip-v4`, this code processes 1400 frames per secon
 
 ## Implementation Details
 
-Beyond the standard PPO algorithm, there are some implementation details drawn from the baselines repo that turned out to be very important in matching the performance:
+Beyond the standard PPO algorithm, there are some implementation details drawn from the baselines repo that turned out to be important in matching the performance:
 - Using Generalized Advantage Estimation for advantages and cumulative discounted future rewards
 - Using multiple parallel environment rollouts
 - Using value clipping with a PPO-style confidence interval region
