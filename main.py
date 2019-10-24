@@ -16,7 +16,7 @@ from tracker import WandBTracker, ConsoleTracker
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--name')
-parser.add_argument('--env_name', default="LunarLander-v2")
+parser.add_argument('--env_name', default="PongNoFrameskip-v4")
 parser.add_argument('--model', default="mlp")
 parser.add_argument('--gamma', default=.99, type=float)
 parser.add_argument('--lam', default=.95, type=float)
@@ -34,9 +34,6 @@ parser.add_argument('--end_on_life_loss', default=False)
 parser.add_argument('--clip_rewards', default=False)
 parser.add_argument('--logger', default="console")
 args = parser.parse_args()
-
-args.model = "mlp"
-args.steps_to_skip = 1
 
 args.batch_size = int(args.num_workers / args.num_batches)
 args.num_actions, args.obs_shape, args.num_obs, action_type = \
