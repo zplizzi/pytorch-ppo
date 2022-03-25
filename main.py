@@ -114,22 +114,23 @@ for i in range(args.num_iterations):
     raw_advantages = advantages.copy()
     advantages = (advantages - advantages.mean()) / (advantages.std() + 1e-5)
 
+    train_data = [advantages, rewards_to_go, values, actions, observations,
+                  policy_probs]
+    train_data = [torch.tensor(x).to(device) for x in train_data]
+
     # Split the data into batches in the num_workers dimension
-    for batch in range(args.num_batches):
-        start = batch * args.batch_size
-        end = (batch + 1) * args.batch_size
+    for epoch in range(args.ppo_epochs):
+        for batch in range(args.num_batches):
+            start = batch * args.batch_size
+            end = (batch + 1) * args.batch_size
 
-        train_data = (advantages, rewards_to_go, values, actions, observations,
-                      policy_probs)
-        # slice out batches from train_data
-        batch_data = [x[start:end] for x in train_data]
-        batch_data = [torch.tensor(x).to(device) for x in batch_data]
+            # slice out batches from train_data
+            batch_data = [x[start:end] for x in train_data]
 
-        # flatten (batch_size,num_steps,...) into ((batch_size*num_steps,...)
-        batch_data = [x.reshape((-1, ) + x.shape[2:]) for x in batch_data]
+            # flatten (batch_size,num_steps,...) into ((batch_size*num_steps,...)
+            batch_data = [x.reshape((-1, ) + x.shape[2:]) for x in batch_data]
 
-        # Step batch
-        for epoch in range(args.ppo_epochs):
+            # Step batch
             train_step(model, optim, batch_data, args, i, tracker)
 
     tracker.log_iteration_time(args.num_workers * args.num_steps, i)
