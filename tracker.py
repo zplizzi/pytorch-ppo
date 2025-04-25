@@ -12,7 +12,11 @@ class WandBTracker:
     def add_histogram(self, tag, data, i):
         if type(data) == torch.Tensor:
             data = data.cpu().detach()
-        wandb.log({tag: wandb.Histogram(data)}, step=i)
+        try:
+            wandb.log({tag: wandb.Histogram(data)}, step=i)
+        except ValueError as e:
+            # you get this eg if there's an inf in `value`, but also in some other cases
+            print(f"got ValueError logging `{tag}` histogram to wandb: {e}")
 
     def add_scalar(self, tag, value, i):
         wandb.log({tag: value}, step=i)

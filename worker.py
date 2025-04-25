@@ -84,9 +84,6 @@ class SubprocWorker:
         self.args = args
         self.shared_obs = shared_obs
 
-        self.env = gym.make(args.env_name)
-        self.env.reset()
-
         # Data preprocessing for raw Atari frames
         self.transform = transforms.Compose([
             transforms.ToPILImage(),
@@ -102,6 +99,8 @@ class SubprocWorker:
         """The worker entrypoint, will wait for commands from the main
         process and execute them."""
         try:
+            self.env = gym.make(self.args.env_name)
+            self.env.reset()
             while True:
                 cmd, t, action = self.pipe.recv()
                 if cmd == 'step':
