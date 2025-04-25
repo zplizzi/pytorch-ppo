@@ -39,6 +39,8 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     gym.register_envs(ale_py)
+    # this is required so that we share the shared array properly. mac eg default is spawn.
+    mp.set_start_method('fork')
 
     args.batch_size = int(args.num_workers / args.num_batches)
     assert args.batch_size > 0
