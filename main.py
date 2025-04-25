@@ -12,7 +12,7 @@ from worker import GamePlayer
 from gae import gae
 from util import get_gym_env_info
 from running_mean_std import RunningMeanStd, apply_normalizer
-from tracker import WandBTracker, ConsoleTracker
+from tracker import WandBTracker, ConsoleTracker, NoTracker
 import gymnasium as gym
 import ale_py
 
@@ -83,8 +83,12 @@ if __name__ == "__main__":
     # Build the key classes
     if args.logger == "wandb":
         tracker = WandBTracker(args.name, args)
-    else:
+    elif args.logger == "console":
         tracker = ConsoleTracker(args.name, args)
+    elif args.logger == "none":
+        tracker = NoTracker(args.name, args)
+    else:
+        raise ValueError("Logger not recognized")
     game_player = GamePlayer(args, shared_obs)
     if action_type == "discrete":
         dist = Discrete(args.num_actions)

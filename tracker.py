@@ -59,3 +59,19 @@ class ConsoleTracker:
                 print(f"{i}  samples-per-sec: {batch_size/dt}")
         except AttributeError:
             self.last_time = time.time()
+
+class NoTracker:
+    def __init__(self, name=None, args=None):
+        pass
+
+    def add_histogram(self, tag, data, i):
+        pass
+
+    def add_scalar(self, tag, value, i):
+        pass
+
+    def add_image(self, tag, value, i):
+        pass
+
+    def log_iteration_time(self, batch_size, i):
+        pass
