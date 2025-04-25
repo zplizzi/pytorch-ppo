@@ -18,6 +18,7 @@ It is a parallel implementation, capable of spawning multiple processes to run t
 ## Installation and Usage
 
 Using uv is suggested. Simply prepend all commands with `uv run` and the dependencies should be setup properly.
+On mac, you will need to `brew install swig` first.
 
 The key dependencies are the OpenAI Gym and Pytorch. It runs on CPU or CPU+GPU. For MuJoCo environments, you'll need that (proprietary) dependency also.
 
