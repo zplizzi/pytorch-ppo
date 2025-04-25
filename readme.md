@@ -23,7 +23,7 @@ On mac, you will need to `brew install swig` first, on Linux, you will need to `
 The key dependencies are the OpenAI Gym and Pytorch. It runs on CPU or CPU+GPU. For MuJoCo environments, you'll need that (proprietary) dependency also.
 
 You can run the code with by running `main.py` with any desired arguments, eg
-`main.py --env_name="LunarLander-v2" --model="mlp"`.
+`main.py --env_name="LunarLander-v3" --model="mlp"`.
 
 You must make sure that the model type (`mlp` or `cnn`) matches the environment you're training on.
 
@@ -33,7 +33,7 @@ I'd highly recommend using Weights and Biases for detailed logging. Use the flag
 
 All available arguments can be viewed by running `main.py --help`.
 
-I suggest trying out the Box2d environments such as `LunarLander-v2` and `BipedalWalker-v2` as they're free (unlike MuJoCo) and are what I've tested with. The Atari environments are also included with Gym, but take longer to train. `PongNoFrameskip-v4` is a simple one to test.
+I suggest trying out the Box2d environments such as `LunarLander-v3` and `BipedalWalker-v2` as they're free (unlike MuJoCo) and are what I've tested with. The Atari environments are also included with Gym, but take longer to train. `PongNoFrameskip-v4` is a simple one to test.
 
 ## Performace comparison to OpenAI Baselines
 
@@ -43,17 +43,15 @@ The charts are histograms of complete episode returns per step of the algorithm 
 
 Check out the full, detailed metrics at the "all logging data" links below the charts.
 
-### `LunarLander-v2`
+### `LunarLander-v3`
 
 #### OpenAI Baselines
-`python -m baselines.run --alg=ppo2 --network=mlp --num_timesteps=2e8 --ent_coef=0.01 --num_hidden=64 --num_layers=3 --value_network=copy --num_env=12 --lr=2.5e-4 --vf_coef=.5 --max_grad_norm=.5 --gamma=.99 --lam=.95 --nminibatches=4 --noptepochs=4 --cliprange=.1 --nsteps=128 --env="LunarLander-v2"`
+`python -m baselines.run --alg=ppo2 --network=mlp --num_timesteps=2e8 --ent_coef=0.01 --num_hidden=64 --num_layers=3 --value_network=copy --num_env=12 --lr=2.5e-4 --vf_coef=.5 --max_grad_norm=.5 --gamma=.99 --lam=.95 --nminibatches=4 --noptepochs=4 --cliprange=.1 --nsteps=128 --env="LunarLander-v3"`
 ![](images/baselines_lunar.png)
-[all logging data](https://app.wandb.ai/zplizzi/test/runs/11hm85w6?workspace=user-zplizzi)
 
 #### This code
-`python main.py --env="LunarLander-v2" --model="mlp"`
+`python main.py --env="LunarLander-v3" --model="mlp"`
 ![](images/my_lunar.png)
-[all logging data](https://app.wandb.ai/zplizzi/test/runs/ne3xw444?workspace=user-zplizzi)
 
 ### `PongNoFrameskip-v4`
 
@@ -62,12 +60,10 @@ I didn't spend as much effort making sure my CNN model and hyperparameters are e
 #### OpenAI Baselines
 `export CUDA_VISIBLE_DEVICES=1 && python -m baselines.run --alg=ppo2 --network=cnn --num_timesteps=2e8 --ent_coef=0.01 --num_env=12 --lr=2.5e-4 --vf_coef=.5 --max_grad_norm=.5 --gamma=.99 --lam=.95 --nminibatches=4 --noptepochs=4 --cliprange=.1 --nsteps=128 --env="PongNoFrameskip-v4"`
 ![](images/baselines_pong.png)
-[all logging data](https://app.wandb.ai/zplizzi/test/runs/6f9f2llh?workspace=user-zplizzi)
 
 #### This code
 `python main.py --env="PongNoFrameskip-v4" --model="cnn" --end_on_life_loss=True --clip_rewards=True`
 ![](images/my_pong.png)
-[all logging data](https://app.wandb.ai/zplizzi/test/runs/trr799x9?workspace=user-zplizzi)
 
 
 ### Speed comparison
