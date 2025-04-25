@@ -17,17 +17,18 @@ It is a parallel implementation, capable of spawning multiple processes to run t
 
 ## Installation and Usage
 
-The key dependences are the OpenAI Gym and Pytorch. It runs on CPU or CPU+GPU. For MuJoCo environments, you'll need that (proprietary) dependency also.
+Using uv is suggested. Simply prepend all commands with `uv run` and the dependencies should be setup properly.
 
+The key dependencies are the OpenAI Gym and Pytorch. It runs on CPU or CPU+GPU. For MuJoCo environments, you'll need that (proprietary) dependency also.
 
 You can run the code with by running `main.py` with any desired arguments, eg
 `main.py --env_name="LunarLander-v2" --model="mlp"`.
 
 You must make sure that the model type (`mlp` or `cnn`) matches the environment you're training on.
 
-It will default to running on CPU. To use GPU, use the flag `--device="cuda"`.
+It will default to running on CPU. To use GPU, use the flag `--device="cuda"`. To run on mac, use `--device="mps"`.
 
-I'd highly recommend using Weights and Biases for detailed logging. `pip install wandb`, and then use the flag `logger="wandb"`.
+I'd highly recommend using Weights and Biases for detailed logging. Use the flag `logger="wandb"`.
 
 All available arguments can be viewed by running `main.py --help`.
 

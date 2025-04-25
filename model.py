@@ -99,7 +99,7 @@ class Discrete(nn.Module):
         super().__init__()
 
     def forward(self, x):
-        # Do softmax on the proper dimesion with either batched or non
+        # Do softmax on the proper dimension with either batched or non
         # batched inputs
         if len(x.shape) == 3:
             probs = nn.functional.softmax(x, dim=2)

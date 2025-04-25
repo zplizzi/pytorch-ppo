@@ -1,7 +1,7 @@
 from collections import deque
 import multiprocessing as mp
 
-import gym
+import gymnasium as gym
 import numpy as np
 import torch
 from torchvision import transforms
@@ -124,7 +124,8 @@ class SubprocWorker:
         # action this many times and returning the cumulative rewards
         # from the skipped steps and the final observation
         for _ in range(self.args.steps_to_skip):
-            obs, reward, done, _ = self.env.step(action)
+            obs, reward, terminated, truncated, _ = self.env.step(action)
+            done = terminated or truncated
             fake_done = done
 
             # DQN used this "cheat" where we check if the agent lost
@@ -132,7 +133,7 @@ class SubprocWorker:
             # (but don't actually reset the environment unless it
             # really is over)
             if self.args.end_on_life_loss:
-                lives = self.env.ale.lives()
+                lives = self.env.unwrapped.ale.lives()
                 if (self.previous_lives > lives and lives > 0):
                     # We died
                     fake_done = True
@@ -144,7 +145,7 @@ class SubprocWorker:
             if done:
                 info["final_episode_length"] = self.episode_steps
                 info["final_episode_rewards"] = self.episode_rewards
-                obs = self.env.reset()
+                obs, _ = self.env.reset()
 
                 # This breaks the Box2d games but should try adding it back for
                 # Atari.

@@ -3,12 +3,11 @@ import os
 import time
 
 import torch
-from tensorboardX import SummaryWriter
 import wandb
 
 class WandBTracker:
     def __init__(self, name=None, args=None):
-        wandb.init(project="test", config=args)
+        wandb.init(project="pytorch-ppo", config=args)
 
     def add_histogram(self, tag, data, i):
         if type(data) == torch.Tensor:
